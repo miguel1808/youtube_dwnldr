@@ -27,7 +27,8 @@ def app():
             base , ext = path.splitext(audio_file)
             new_file = base + '.mp3'
             rename(audio_file, new_file)
-            st.download_button("Descargar audio", audio_file)
+            with open(new_file, 'rb') as f:
+                st.download_button(label="Descargar", data=f, file_name=new_file, mime='audio/mp3')
         except:
             st.write("Error al descargar el audio")
     
@@ -35,7 +36,7 @@ def app():
         try:
             yt.streams.filter(progressive=True,file_extension='mp4').order_by('resolution').desc().first().download(direccion)
             
-            st.download_button("Descargar video", direccion)
+            
         except:
             st.write("Error al descargar el video")
     
